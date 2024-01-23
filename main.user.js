@@ -11,8 +11,8 @@
 // @author       Kieran Kihn
 // @description  智学网排名查询
 // @source       https://github.com/kierankihn/zhixue-rank
-// @updateURL    https://github.com/kierankihn/zhixue-rank/blob/main/main.js
-// @downloadURL  https://github.com/kierankihn/zhixue-rank/blob/main/main.js
+// @updateURL    https://github.com/kierankihn/zhixue-rank/blob/main/main.user.js
+// @downloadURL  https://github.com/kierankihn/zhixue-rank/blob/main/main.user.js
 // @supportURL   https://github.com/kierankihn/zhixue-rank/issues/new/
 // @match        https://www.zhixue.com/activitystudy/web-report/index.html?from=web-container_top
 // @grant        none
@@ -21,6 +21,13 @@
 var rankData = {},
     rankElement = null;
 
+/**
+ * Calculate the rank info based on the data that is passed in
+ *
+ * @param {object} Data - the zhixue.com api returned data
+ * 
+ * @return {void} 
+ */
 function calcRank(Data) {
     rankData = [];
     for (let examData in Data) {
@@ -41,6 +48,14 @@ function calcRank(Data) {
         rankData.push(nowRankData);
     }
 }
+
+/**
+ * Renders the rank data onto the report page.
+ *
+ * @param {void} 
+ * @return {void}
+ * 
+ */
 function render() {
     console.log(rankData);
     if (rankElement != null) {
@@ -64,6 +79,14 @@ function render() {
     document.querySelector('#report > div > div.report > div > div.report-content').insertBefore(rankElement, document.querySelector('#report > div > div.report > div > div.report-content > div:nth-child(3)'));
 }
 
+/**
+ * Send a patch request to the given URL and handle the response using the provided XHR object.
+ *
+ * @param {string} url - The URL to send the patch request to
+ * @param {XMLHttpRequest} xhr - The XMLHttpRequest object used to send the request
+ * @return {void} 
+ * 
+ */
 function patchRequest(url, xhr) {
     if (url.indexOf('https://www.zhixue.com/zhixuebao/report/paper/getLevelTrend') !== -1) {
         xhr.addEventListener("load", function (proto) {
@@ -78,6 +101,13 @@ function patchRequest(url, xhr) {
     }
 }
 
+/**
+ * Replaces the open method of XMLHttpRequest to intercept and patch the request before proceeding.
+ *
+ * @param {void} 
+ * @return {void} 
+ * 
+ */
 function inject() {
     XMLHttpRequest.prototype._open = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function (method, url, async, user, password) {
