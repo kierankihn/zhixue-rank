@@ -57,7 +57,6 @@ function calcRank(Data) {
  * 
  */
 function render() {
-    console.log(rankData);
     if (rankElement != null) {
         rankElement.remove();
     }
@@ -94,7 +93,6 @@ function patchRequest(url, xhr) {
             if (xhr.readyState !== 4) {
                 return;
             }
-            console.log('785');
             calcRank(JSON.parse(xhr.response).result.list);
             render();
         });
