@@ -87,7 +87,7 @@ function render() {
  * 
  */
 function patchRequest(url, xhr) {
-    if (url.indexOf('https://www.zhixue.com/zhixuebao/report/paper/getLevelTrend') !== -1) {
+    if (url.indexOf('zhixuebao/report/exam/getLevelTrend') !== -1) {
         xhr.addEventListener("load", function (proto) {
             const xhr = proto.currentTarget;
             if (xhr.readyState !== 4) {
